@@ -1,0 +1,8 @@
+**/__pycache__/
+**/.idea/
+env/
+
+data/checkpoints/
+data/models/
+data/data/
+data/data.tar.gz
