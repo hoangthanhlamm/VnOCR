@@ -1,6 +1,6 @@
 # Vietnamese OCR with CRNN
 
-Text Recognition from images using CRNN for Vietnamese characters.
+Text Recognition from images using CRNN for Vietnamese words.
 
 ## Install requirements
 
@@ -9,15 +9,25 @@ pip install -r requirements.txt
 ```
 ## Dataset
 
-Dataset used for project [here](https://drive.google.com/file/d/1dVO8yyqvyGVeWnQ78C5WYOdjCwaa7mUr/view?usp=sharing).
+Dataset is used for project [here](https://drive.google.com/file/d/1dVO8yyqvyGVeWnQ78C5WYOdjCwaa7mUr/view?usp=sharing).
+This dataset contains over 20.000 images of Vietnamese word.
 
-## Model's weights
+![demo image](docs/images/demo_v2.png)
+
+## CRNN Model
+
+Project used [Convolutional Recurrent Neural Network (CRNN)](https://arxiv.org/abs/1507.05717), a combination of CNN and RNN.
+[The architecture consists of three parts: 1) convolutional layers, which extract a feature sequence from the input image; 2) recurrent layers, which predict
+a label distribution for each frame; 3) transcription layer, which
+translates the per-frame predictions into the final label sequence.][1]
+
+[![CRNN architecture](docs/images/CRNN.png)][1]
+
+## Prepare
 
 Pretrained model for prediction and evaluation [vn_model.h5](https://drive.google.com/file/d/1-WmGlGVQtyrcPFCqwMYiwULKXvO_XM8M/view?usp=sharing)
 
-### Prepare Data
-
-Download dataset and pretrained model from Google Drive. Then, extract and \
+Download dataset and pretrained model from Google Drive. Then, extract and
 split dataset into train, validate and test set.
 
 ```
@@ -30,7 +40,7 @@ python libs/prepare/prepare_data.py
 python main.py
 ```
 
-Application run on <u>http://localhost:8096 </u>
+Application run on <http://localhost:8096>
 
 ## Api
 
@@ -38,7 +48,7 @@ Application run on <u>http://localhost:8096 </u>
     - URL: /train
     - Method: GET
     - Params:
-         - **epochs**: Number of training epochs
+         - **epochs**: Number of training epochs, integer
     - Usage: Training model and save weights
 
 2. Evaluation 
@@ -56,3 +66,6 @@ Application run on <u>http://localhost:8096 </u>
         - **img**: Path to image for prediction
     - Usage: Predict text in new image
     - Return: Text predicted
+
+[1]: <https://arxiv.org/abs/1507.05717> "An End-to-End Trainable Neural Network for Image-based Sequence
+Recognition and Its Application to Scene Text Recognition"
