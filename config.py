@@ -29,4 +29,4 @@ checkpoint_path = os.path.join(data_path, 'checkpoints')
 pretrained_model = os.path.join(data_path, 'models/vn_model.h5')
 
 download_data_url = 'https://drive.google.com/uc?id=1dVO8yyqvyGVeWnQ78C5WYOdjCwaa7mUr'
-download_model_url = 'https://drive.google.com/uc?id=1-WmGlGVQtyrcPFCqwMYiwULKXvO_XM8M'
+download_model_url = 'https://drive.google.com/uc?id=1-jxcAlRsv5Dr67iZ414vVHFlfGDFq5aU'

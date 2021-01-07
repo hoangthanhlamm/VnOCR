@@ -17,9 +17,10 @@ This dataset contains over 20.000 images of Vietnamese word.
 ## CRNN Model
 
 Project used [Convolutional Recurrent Neural Network (CRNN)](https://arxiv.org/abs/1507.05717), a combination of CNN and RNN.
-[The architecture consists of three parts: 1) convolutional layers, which extract a feature sequence from the input image; 2) recurrent layers, which predict
-a label distribution for each frame; 3) transcription layer, which
-translates the per-frame predictions into the final label sequence.][1]
+The architecture consists of three parts: 
+1) convolutional layers, which extract a feature sequence from the input image;
+2) recurrent layers, which predict a label distribution for each frame;
+3) transcription layer, which translates the per-frame predictions into the final label sequence.
 
 [![CRNN architecture](docs/images/CRNN.png)][1]
 
