@@ -32,7 +32,7 @@ Download dataset and pretrained model from Google Drive. Then, extract and
 split dataset into train, validate and test set.
 
 ```
-python libs/prepare/prepare_data.py
+python prepare.py
 ```
 
 ## Run application
