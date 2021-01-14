@@ -38,7 +38,7 @@ def ctc_loss_function(args):
 def decode_label(lm, out, word=True):
     mat = out[0, 2:, :]
     if word:
-        out_str = word_beam_search(mat, beam_width, lm, False)
+        out_str = word_beam_search(mat, beam_width, lm)
     else:
         out_best = list(np.argmax(mat, axis=1))
         out_best = [k for k, g in itertools.groupby(out_best)]

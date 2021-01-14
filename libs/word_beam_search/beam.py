@@ -23,12 +23,11 @@ class Textual:
 class Beam:
     """beam with text, optical and textual score"""
 
-    def __init__(self, lm, useNGrams):
+    def __init__(self, lm):
         """creates genesis beam"""
         self.optical = Optical(1.0, 0.0)
         self.textual = Textual('')
         self.lm = lm
-        self.useNGrams = useNGrams
 
     def merge_beam(self, beam):
         """merge probabilities of two beams with same text"""
@@ -62,7 +61,7 @@ class Beam:
 
     def create_child_beam(self, newChar, prBlank, prNonBlank):
         """extend beam by new character and set optical score"""
-        beam = Beam(self.lm, self.useNGrams)
+        beam = Beam(self.lm)
 
         # copy textual information
         beam.textual = copy.deepcopy(self.textual)
@@ -70,50 +69,10 @@ class Beam:
 
         # do textual calculations only if beam gets extended
         if newChar != '':
-            if self.useNGrams:  # use unigrams and bigrams
-
-                # if new char occurs inside a word
-                if newChar in beam.lm.get_word_chars():
-                    beam.textual.wordDev += newChar
-                    nextWords = beam.lm.get_next_words(beam.textual.wordDev)
-
-                    # no complete word in text, then use unigrams of all possible next words
-                    numWords = len(beam.textual.wordHist)
-                    prSum = 0
-                    if numWords == 0:
-                        for w in nextWords:
-                            prSum += beam.lm.get_unigram_prob(w)
-                    # take last complete word and sum up bigrams of all possible next words
-                    else:
-                        lastWord = beam.textual.wordHist[-1]
-                        for w in nextWords:
-                            prSum += beam.lm.get_bigram_prob(lastWord, w)
-                    beam.textual.prTotal = beam.textual.prUnnormalized * prSum
-                    beam.textual.prTotal = beam.textual.prTotal ** (
-                            1 / (numWords + 1)) if numWords >= 1 else beam.textual.prTotal
-
-                # if new char does not occur inside a word
-                else:
-                    # if current word is not empty, add it to history
-                    if beam.textual.wordDev != '':
-                        beam.textual.wordHist.append(beam.textual.wordDev)
-                        beam.textual.wordDev = ''
-
-                        # score with unigram (first word) or bigram (all other words) probability
-                        numWords = len(beam.textual.wordHist)
-                        if numWords == 1:
-                            beam.textual.prUnnormalized *= beam.lm.get_unigram_prob(beam.textual.wordHist[-1])
-                            beam.textual.prTotal = beam.textual.prUnnormalized
-                        elif numWords >= 2:
-                            beam.textual.prUnnormalized *= beam.lm.get_bigram_prob(beam.textual.wordHist[-2],
-                                                                                   beam.textual.wordHist[-1])
-                            beam.textual.prTotal = beam.textual.prUnnormalized ** (1 / numWords)
-
-            else:  # don't use unigrams and bigrams, just keep wordDev up to date
-                if newChar in beam.lm.get_word_chars():
-                    beam.textual.wordDev += newChar
-                else:
-                    beam.textual.wordDev = ''
+            if newChar in beam.lm.get_word_chars():
+                beam.textual.wordDev += newChar
+            else:
+                beam.textual.wordDev = ''
 
         # set optical information
         beam.optical.prBlank = prBlank

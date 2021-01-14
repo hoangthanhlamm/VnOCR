@@ -5,12 +5,6 @@ class Node:
         self.children = {}  # all child elements beginning with current prefix
         self.isWord = False  # does this prefix represent a word
 
-    def __str__(self):
-        s = ''
-        for k in self.children.keys():
-            s += k
-        return 'isWord: ' + str(self.isWord) + '; children: ' + s
-
 
 class PrefixTree:
     """prefix tree"""
@@ -81,16 +75,3 @@ class PrefixTree:
                 del prefixes[0]
 
         return words
-
-    def dump(self):
-        nodes = [self.root]
-        while len(nodes) > 0:
-            # put all children into list
-            for v in nodes[0].children.values():
-                nodes.append(v)
-
-            # dump current node
-            print(nodes[0])
-
-            # remove from list
-            del nodes[0]

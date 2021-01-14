@@ -1,13 +1,13 @@
 from libs.word_beam_search.beam import Beam, BeamList
 
 
-def word_beam_search(mat, beamWidth, lm, useNGrams=False):
+def word_beam_search(mat, beamWidth, lm):
     """decode matrix, use given beam width and language model"""
     chars = lm.get_all_chars()
     blankIdx = len(chars)  # blank label is supposed to be last label in RNN output
     maxT, _ = mat.shape  # shape of RNN output: TxC
 
-    genesisBeam = Beam(lm, useNGrams)  # empty string
+    genesisBeam = Beam(lm)  # empty string
     last = BeamList()  # list of beams at time-step before beginning of RNN output
     last.add_beam(genesisBeam)  # start with genesis beam
 
